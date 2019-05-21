@@ -1,25 +1,37 @@
 const formatDate = (timeInSeconds) => {
-	const hours = Math.floor(timeInSeconds/3600);
-	const minutes = Math.floor(timeInSeconds%3600/60);
+	 if (typeof(timeInSeconds)==="undefined"){
+			return "0s";
+		}
 	const seconds = Math.floor(timeInSeconds%3600%60);
+	const minutes = Math.floor(timeInSeconds%3600/60);
+	const hours = Math.floor(timeInSeconds/3600);
 
-	const displaySeconds = seconds===0 ? "":`${seconds}s`;
-	const displayMinutes = minutes===0 ? "":`${minutes}h`;
-	const displayHours = hours===0 ? "":`${hours}h`; 
+	const displaySeconds = function(){
+		if(seconds!=0){
+			return `${seconds}s`;
+		} else {
+			return "";
+		}
+	};
 
-	// if (timeInSeconds<60){
-	// 	return `${seconds}s`;
-	// } else if (isNaN(timeInSeconds)){
-	// 	return `0s`;
-	// } else if (hour===0){
-	// 	return hour="";
-	// } else if (seconds===0){
-	// 	return `${day}d ${hour}h ${minutes}m`;
-	// } else {
-	// 	return;
-	// }
+	const displayMinutes = function(){
+		if (minutes==0 && hours==0 || hours!=0 && minutes==0){
+			return "";
+		} else {
+			return `${minutes}m `;
+		}
+	};
+		
 
-  return `${displayHours}${displayMinutes}${displaySeconds}`;
+	const displayHours = function(){
+		if (hours==0){
+			return "";
+		} else {
+			return `${hours}h `
+		}
+	};
+
+  return (`${displayHours()}${displayMinutes()}${displaySeconds()}`).trim();
 };
 
 
